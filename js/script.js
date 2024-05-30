@@ -9,7 +9,7 @@ const playAgainButton =document.querySelector(".play-again");
 
 const word = "magnolia";
 
-//add new global variable for player guesses part2
+//add new global variable for player guesses part#2
 guessedLetters = [];
 
 //display your symbols as placeholders for the chosen words letters
@@ -24,7 +24,7 @@ const placeholder = function (word) {
 
 placeholder(word);
 //adding event listener for the button
-//validate input button event handler part2...
+//validate input button event handler part#2...
 
 guessedLetterButton.addEventListener("click",function (e) {
     e.preventDefault();
@@ -32,7 +32,7 @@ guessedLetterButton.addEventListener("click",function (e) {
     message.innerText = "";
     //lets grab what we entered in the input
 const guess = letterInput.value;
-   //lets make sure its a single letter
+    //lets make sure its a single letter
 const goodGuess = validateInput(guess);
 
 if(goodGuess) {
@@ -43,7 +43,7 @@ if(goodGuess) {
     letterInput.value = "";
 });
 
-//create a function to check players input part2...
+//create a function to check players input part#2...
 
 const validateInput = function (input) {
     const acceptedLetter = /[a-zA-Z]/;
@@ -62,7 +62,7 @@ const validateInput = function (input) {
     }
 };
 
-//create function to capture input part2...
+//create function to capture input part#2...
 
 const makeGuess = function (guess) {
     guess = guess.toUpperCase();
@@ -71,8 +71,56 @@ const makeGuess = function (guess) {
     } else {
         guessedLetters.push(guess);
         console.log(guessedLetters);
+//calling the function so letter displays if hasn`t been chosen part#3
+        showGuessedLetters();
+        updateWordInProgress(guessedLetters);
     }
 };
+
+//create a function to show the guessed letters part#3
+
+const showGuessedLetters = function () {
+     //empty inner HTMl of unordered list
+guessedLettersElement.innerHTML = "";
+for (const letter of guessedLetters) {
+    const li = document.createElement("li");
+    li.innerText = letter;
+    guessedLettersElement.append(li);
+}
+};
+
+//function to update the word in progress part#3
+
+//function to replace circle symbols with correct letters
+const updateWordInProgress = function (guessedLetters) {
+    const wordUpper = word.toUpperCase ();
+    const wordArray = wordUpper.split("");
+    const revealWord = [];
+    for (const letter of wordArray) {
+        if (guessedLetters.includes(letter)) {
+            revealWord.push(letter.toUpperCase());
+        } else {
+            revealWord.push("🕳️");
+        }
+    }
+    //console.log(revealWord);
+wordInProgress.innerText = revealWord.join("");
+  checkIfWin();     
+};
+
+//function to check if player has won 
+
+const checkIfWin = function () {
+    if (word.toUpperCase() === wordInProgress.innerText) {
+        message.classList.add("win");
+        message.innerHTML = `<p class = "highlight">You guessed correct ... YAHOOOOooo !</p>`;
+    }
+};
+
+
+
+
+
 
 
 
